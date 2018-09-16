@@ -1,0 +1,171 @@
+<!-- main content start-->
+<div id="page-wrapper">
+
+      <div class="col-md-12">
+          <div class="row">
+            <div clas="col-md-3">
+            	<table>
+            		<tr class="cabecera-padding">
+            			<td><h1 style="font-color: withe;">Periodo </h1></td>
+            			<td>
+            				<select class="form-control" id="month">
+				                <option value="1">ENERO</option>
+				                <option value="2">FEBRERO</option>
+				                <option value="3">MARZO</option>
+				                <option value="4">ABRIL</option>
+				                <option value="5">MAYO</option>
+				                <option value="6">JUNIO</option>
+				                <option value="7">JULIO</option>
+				                <option value="8">AGOSTO</option>
+				                <option value="9">SEPTIEMBRE</option>
+				                <option value="10">OCTUBRE</option>
+				                <option value="11">NOVIEMBRE</option>
+				                <option value="12">DICIEMBRE</option>
+				              </select>
+            			</td>
+            			<td>
+            				<select class="form-control" id="year">
+				                <option value="2018">2018</option>
+				                <option value="2019">2019</option>
+				                <option value="2020">2020</option>
+				            </select>
+            			</td>              
+            			<td>
+            				<a href="/new-content">
+                      <button type="button" class="btn btn-success">
+                        Add Content
+                      </button>
+                    </a>
+            			</td>
+            		</tr>
+            	</table>
+          </div> 
+          <div class="col-md-3"></div> 
+          <div class="col-md-3"></div> 
+          <div class="col-md-3"></div> 
+          </div>          
+        </div><br><br>
+
+
+<!--Categorías-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-3 widget widget1">
+      <div class="r3_counter_box">
+        <i class="pull-left fa fa-balance-scale icon-rounded"></i>
+        <div class="stats">
+          <h5><strong onload="obtenerEquilibrio()" id="Equilibrio"></strong></h5>
+          <span>Equilibrio</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 widget widget1" *ngFor="let s of categoryReports">
+      <div class="r3_counter_box">
+        <i class="pull-left fa fa-hand-holding-usd icon-rounded"></i>
+        <div class="stats">
+          <h5><strong id="{{s._id.category}}">${{s.totalAmount}}</strong></h5>
+          <span>{{s._id.category}}</span>
+        </div>
+      </div>
+    </div>  
+  </div>
+  <div class="clearfix"> </div>
+</div>        
+<!--fin Categorías-->
+
+<!--Subcategorías-->
+<div class="row">
+	<div class="col-md-12">
+		<div class="col-md-3" *ngFor="let s of subcategoryReports">
+      <div class="info-box-content style-gastos">
+        <span class="info-box-text"><b>{{s._id.category}}</b></span><br>
+        <span class="info-box-number">${{s.totalAmount}}</span>
+        <span class="progress-description">({{(s.totalAmount*100.00)/gastos}}%)</span>
+        <div class="progress">
+          <div class="progress-bar" style="width: 25%"></div>
+        </div>
+      </div><!-- /.info-box-content -->
+    </div>
+	</div>
+</div>
+<!--fin Subcategorías-->
+
+<div class="col-md-12">
+	<div class="row">
+    <div class="col-md-4 span_8">
+      <div class="activity_box">
+        <h2>50% | Real: $ | Estimado: $</h2>
+        <div class="scrollbar" id="style-1">
+          <table class="table table-bordered">
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Pagar</th>
+              <th>Acciones</th>
+            </tr>
+            <tr *ngFor="let i of category_father_50">
+              <td>{{i.name_content}}</td>
+              <td>{{i.amount}}</td>
+              <td><input type="checkbox" ng-checked="i.is_pay" ng-click="payContent(i)"></td>
+              <td>
+                <span><a href=""><i class="fa fa-pencil-alt"></i></a></span>
+                <span><a href=""><i class="fas fa-trash-alt"></i></a></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 span_8">
+    <div class="activity_box activity_box1">
+      <h3>30% | Real: $ | Estimado: $</h3>
+      <div class="scrollbar" id="style-3">
+        <table class="table table-bordered">
+        	<tr>
+            <th>Descripción</th>
+            <th>Monto</th>
+            <th>Pagar</th>
+            <th>Acciones</th>
+          </tr>
+          <tr *ngFor="let i of category_father_30">
+            <td>{{i.name_content}}</td>
+            <td max-lenght="4">{{i.amount}}</td>
+            <td><input type="checkbox" ng-checked="i.is_pay" ng-click="payContent(i)"></td>
+            <td>
+              <span><a href=""><i class="fa fa-pencil-alt"></i></a></span>
+              <span><a href=""><i class="fas fa-trash-alt"></i></a></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="col-md-4 span_8">
+    <div class="activity_box activity_box2">
+      <h3>20% | Real: $ | Estimado: $</h3>
+      <div class="scrollbar" id="style-2">
+        <table class="table table-bordered">
+          <tr>
+            <th>Descripción</th>
+            <th>Monto</th>
+            <th>Pagar</th>
+            <th>Acciones</th>
+          </tr>
+          <tr *ngFor="let i of category_father_20">
+            <td>{{i.name_content}}</td>
+            <td>{{i.amount}}</td>
+            <td><input type="checkbox" ng-checked="i.is_pay" ng-click="payContent(i)"></td>
+            <td>
+              <span><a href=""><i class="fa fa-pencil-alt"></i></a></span>
+              <span><a href=""><i class="fas fa-trash-alt"></i></a></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  <div class="clearfix"> </div>
+  </div>
+</div>
+
+</div>
