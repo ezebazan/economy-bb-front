@@ -108,8 +108,13 @@
               <td>{{i.amount}}</td>
               <td><input type="checkbox" ng-checked="i.is_pay" ng-click="payContent(i)"></td>
               <td>
-                <span><a href=""><i class="fa fa-pencil-alt"></i></a></span>
-                <span><a href=""><i class="fas fa-trash-alt"></i></a></span>
+                <span><a [routerLink]="['/edit-content', i._id]"><i class="fa fa-pencil-alt"></i></a></span>&nbsp;
+                <span><a (click)="onBorrarConfirm(i._id)"><i class="fas fa-trash-alt"></i></a></span>
+                <div class="seguro" *ngIf="confirmado == i._id">
+                  <strong>¿Esta seguro de eliminar el contenido?</strong>
+                  <a (click)="onBorrarContent(i._id)" class="btn btn-danger">Eliminar</a>
+                  <a (click)="onCancelarConfirm(i._id)" class="btn btn-warning">Cancelar</a>
+                </div>
               </td>
             </tr>
           </table>
@@ -132,8 +137,13 @@
             <td max-lenght="4">{{i.amount}}</td>
             <td><input type="checkbox" ng-checked="i.is_pay" ng-click="payContent(i)"></td>
             <td>
-              <span><a href=""><i class="fa fa-pencil-alt"></i></a></span>
-              <span><a href=""><i class="fas fa-trash-alt"></i></a></span>
+              <span><a [routerLink]="['/edit-content', i._id]"><i class="fa fa-pencil-alt"></i></a></span>&nbsp;
+                <span><a (click)="onBorrarConfirm(i._id)"><i class="fas fa-trash-alt"></i></a></span>
+                <div class="seguro" *ngIf="confirmado == i._id">
+                  <strong>¿Esta seguro de eliminar el contenido?</strong>
+                  <a (click)="onBorrarContent(i._id)" class="btn btn-danger">Eliminar</a>
+                  <a (click)="onCancelarConfirm(i._id)" class="btn btn-warning">Cancelar</a>
+                </div>
             </td>
           </tr>
         </table>
@@ -156,8 +166,13 @@
             <td>{{i.amount}}</td>
             <td><input type="checkbox" ng-checked="i.is_pay" ng-click="payContent(i)"></td>
             <td>
-              <span><a href=""><i class="fa fa-pencil-alt"></i></a></span>
-              <span><a href=""><i class="fas fa-trash-alt"></i></a></span>
+              <span><a [routerLink]="['/edit-content', i._id]"><i class="fa fa-pencil-alt"></i></a></span>&nbsp;
+                <span><a (click)="onBorrarConfirm(i._id)"><i class="fas fa-trash-alt"></i></a></span>
+                <div class="seguro" *ngIf="confirmado == i._id">
+                  <strong>¿Esta seguro de eliminar el contenido?</strong>
+                  <a (click)="onBorrarContent(i._id)" class="btn btn-danger">Eliminar</a>
+                  <a (click)="onCancelarConfirm(i._id)" class="btn btn-warning">Cancelar</a>
+                </div>
             </td>
           </tr>
         </table>

@@ -13,6 +13,11 @@ export class ContentService {
 		this.url = GLOBAL.url;
 	}
 
+	getContent(id) {
+		return this._http.get(this.url + 'content/' + id)
+							.pipe(map(res => res.json()));
+	}
+
 	getContents() {
 		return this._http.get(this.url + 'contents')
 							.pipe(map(res => res.json()));
@@ -39,6 +44,20 @@ export class ContentService {
 		let headers = new Headers({'Content-Type': 'application/json'});
 
 		return this._http.post(this.url + 'content', params, {headers: headers})
+								.pipe(map(res => res.json()));
+	}
+
+	editContent(id: String, content: Content) {
+		let json = JSON.stringify(content);
+		let params = json;
+		let headers = new Headers({'Content-Type': 'application/json'});
+
+		return this._http.put(this.url + 'content/' + id, params, {headers: headers})
+								.pipe(map(res => res.json()));
+	}
+
+	deleteContent(id: String) {
+		return this._http.delete(this.url + 'content/' + id)
 								.pipe(map(res => res.json()));
 	}
 }

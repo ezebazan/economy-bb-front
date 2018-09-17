@@ -15,32 +15,28 @@ import {Subcategory} from '../models/subcategory';
 import {Category} from '../models/category';
 
 @Component({
-	selector: 'contents-list',
-	templateUrl: '../views/contents-list.html',
+	selector: 'content-edit',
+	templateUrl: '../views/edit-content.html',
 	providers: [ContentService, CoinService, CardService, PaymentService, SubcategoryService, CategoryService]
 })
 
-export class ContentsListComponent implements OnInit {
+export class ContentEditComponent implements OnInit {
 	public titulo: string;
-	public category_father_50: Content[];
-	public category_father_30: Content[];
-	public category_father_20: Content[];
+	public content_edit: Content;
+	public content: Content;
 	public coins: Coin[];
 	public cards: Card[];
 	public payments: Payment[];
 	public categories: Category[];
 	public subcategories: Subcategory[];
-	public subcategoryReports: Content[];
-	public categoryReports: Content[];
+	public subcategory_new: Subcategory;
 	public errorMessage: any;
 	public chk_gasto: boolean;
 	public chk_ingreso: boolean;
 	public title: string;
-	public equilibrio: number;
 	public periodo: string;
 	public fecha: Date;
 	public meses: string[];
-	public confirmado;
 
 	constructor(
 			private _route: ActivatedRoute,
@@ -52,32 +48,110 @@ export class ContentsListComponent implements OnInit {
 			private _subcategoryService: SubcategoryService,
 			private _categoryService: CategoryService
 		){
-		this.titulo = "Listado de contenidos:";
+		this.titulo = "Edit Content:";
+		this.chk_gasto = true;
+		this.chk_ingreso = false;
+		this.title = "Gasto";
 	}
 
 	ngOnInit() {
-		this.obtenerPeriodo();
-		this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
+		this.getContent();
+		this.content_edit = new Content("","",0,"","","","","","","","","","","");
+		console.log(this.content_edit);
+		this.subcategory_new = new Subcategory("","","");
+		console.log(this.subcategory_new);
 		this.getCoins();
 		this.getPayments();
 		this.getCategories();
-		this.getSubCategoryReports();
-		this.getCategoryReports();
 	}
 
-	obtenerPeriodo() {
+	verificarCargaContent(typeContent) {
+		if(typeContent == 'ingreso') {
+			this.chk_gasto = false;
+			this.chk_ingreso = true;
+			//$("#ingreso").css({"display": "none"});
+			this.title = "Ingreso";
+		} else if(typeContent == 'gasto') {
+			this.chk_gasto = true;
+			this.chk_ingreso = false;
+			//$("#ingreso").css({"display": "block"});
+			this.title = "Gasto";
+		}
+	}
+
+	obtenerCard(payment) {
+		if(payment == 'Crédito') {
+			this.getCards();
+		} else {
+			this.cards = null;
+		}
+	}
+
+	getContent() {
+		this._route.params.forEach((params: Params) => {
+			let id = params['id'];
+
+			this._contentService.getContent(id).subscribe(
+				result => {
+					this.content_edit = result.content;
+
+					if(!this.content_edit) {
+						alert("Error en el servidor");
+					}
+				},
+				error => {
+					this.errorMessage = <any>error;
+
+					if(this.errorMessage != null) {
+						console.log(this.errorMessage);
+					}
+				}
+			);
+
+		});
+	}
+
+	public onSubmit() {
+		console.log(this.content_edit);
+
 		this.meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-		this.fecha = new Date();
-		this.periodo = this.meses[this.fecha.getMonth()];
+		this.fecha = new Date(this.content_edit.date);
+		this.content_edit.periodo = this.meses[this.fecha.getMonth()];
+
+		if(this.content_edit.category_father == 'Ingreso') {
+			this.content_edit.category_super = 'Ingreso';
+		} else {
+			this.content_edit.category_super = 'Gasto';
+			if(this.content_edit.total_dues == '1') {
+				this.content_edit.dues == '1'
+			}
+		}
+		this._contentService.editContent(this.content_edit._id, this.content_edit).subscribe(
+				response => {
+					if(!this.content_edit) {
+						alert("Error en el servidor");
+					} else {
+						//navegar al home
+					}
+				},
+				error => {
+					this.errorMessage = <any>error;
+
+					if(this.errorMessage != null) {
+						console.log(this.errorMessage);
+					}
+				}
+			);
 	}
 
-	getContentsCategoryFather(categoryFather_1, categoryFather_2, categoryFather_3, periodo) {
-		this._contentService.getContentsCategoryFather(categoryFather_1, periodo).subscribe(
-				result => {
-					this.category_father_50 = result.contents;
-
-					if(!this.category_father_50) {
+	public saveSubcategory() {
+		console.log(this.subcategory_new);
+		this._subcategoryService.addSubcategory(this.subcategory_new).subscribe(
+				response => {
+					if(!this.subcategory_new) {
 						alert("Error en el servidor");
+					} else {
+						this.subcategory_new = response.subcategory;
 					}
 				},
 				error => {
@@ -88,29 +162,14 @@ export class ContentsListComponent implements OnInit {
 					}
 				}
 			);
+	}
 
-		this._contentService.getContentsCategoryFather(categoryFather_2, periodo).subscribe(
+	public getCategoryByFather(category_father) {
+		this._subcategoryService.getCategoryByFather(category_father).subscribe(
 				result => {
-					this.category_father_30 = result.contents;
+					this.subcategories = result.subcategories;
 
-					if(!this.category_father_30) {
-						alert("Error en el servidor");
-					}
-				},
-				error => {
-					this.errorMessage = <any>error;
-
-					if(this.errorMessage != null) {
-						console.log(this.errorMessage);
-					}
-				}
-			);
-
-		this._contentService.getContentsCategoryFather(categoryFather_3, periodo).subscribe(
-				result => {
-					this.category_father_20 = result.contents;
-
-					if(!this.category_father_20) {
+					if(!this.subcategories) {
 						alert("Error en el servidor");
 					}
 				},
@@ -189,67 +248,6 @@ export class ContentsListComponent implements OnInit {
 					if(!this.categories) {
 						alert("Error en el servidor");
 					}
-				},
-				error => {
-					this.errorMessage = <any>error;
-
-					if(this.errorMessage != null) {
-						console.log(this.errorMessage);
-					}
-				}
-			);
-	}
-
-	getCategoryReports() {
-		this._contentService.getCategoryReports().subscribe(
-				result => {
-					this.categoryReports = result.reports;
-
-					if(!this.categoryReports) {
-						alert("Error en el servidor");
-					}
-				},
-				error => {
-					this.errorMessage = <any>error;
-
-					if(this.errorMessage != null) {
-						console.log(this.errorMessage);
-					}
-				}
-			);
-	}
-
-	getSubCategoryReports() {
-		this._contentService.getSubCategoryReports().subscribe(
-				result => {
-					this.subcategoryReports = result.reports;
-
-					if(!this.subcategoryReports) {
-						alert("Error en el servidor");
-					}
-				},
-				error => {
-					this.errorMessage = <any>error;
-
-					if(this.errorMessage != null) {
-						console.log(this.errorMessage);
-					}
-				}
-			);
-	}
-
-	onBorrarConfirm(id) {
-		this.confirmado = id;
-	}
-
-	onCancelarConfirm(id) {
-		this.confirmado = null;
-	}
-
-	onBorrarContent(id) {
-		this._contentService.deleteContent(id).subscribe(
-				result => {
-					this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
 				},
 				error => {
 					this.errorMessage = <any>error;

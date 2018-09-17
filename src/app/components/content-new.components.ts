@@ -53,7 +53,7 @@ export class ContentNewComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.content_new = new Content("",0,"","","","","","","","","","","");
+		this.content_new = new Content("","",0,"","","","","","","","","","","");
 		console.log(this.content_new);
 		this.subcategory_new = new Subcategory("","","");
 		console.log(this.subcategory_new);

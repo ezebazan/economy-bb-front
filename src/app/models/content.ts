@@ -1,5 +1,6 @@
 export class Content {
 	constructor(
+		public _id: string,
 		public name_content: string,
 		public amount: number,
 		public is_pay: string,

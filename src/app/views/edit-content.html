@@ -1,4 +1,4 @@
-<div class="new-content">
+<div class="edit-content">
 	<div class="row">
 		<div class="col-md-12">
 			<a href="/"><button class="btn btn-default" >Volver</button></a>
@@ -14,30 +14,29 @@
 	        </div>
 	    </div>
 	</div>
-	<form #formContents="ngForm" (ngSubmit)="onSubmit()">
 	<div id="gasto">
 		<h4 class="modal-title">Registrar {{title}}</h4>
 		<div class="row">
 	    	<div class="col-md-6">
 	        	<div class="form-group">
 	            	<label>Nombre</label>
-	                <input type="text" class="form-control" name="name_content" #name_content="ngModel" [(ngModel)]="content_new.name_content" >
+	                <input type="text" class="form-control" name="name_content" #name_content="ngModel" [(ngModel)]="content_edit.name_content" >
 	            </div>
 	            <div class="form-group">
 					<label>Monto</label>
-					<input type="text" class="form-control" name="amount" #amount="ngModel" [(ngModel)]="content_new.amount">
+					<input type="text" class="form-control" name="amount" #amount="ngModel" [(ngModel)]="content_edit.amount">
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Fecha</label>
-					<input type="date" class="form-control" name="date" #date="ngModel" [(ngModel)]="content_new.date">
+					<input type="date" class="form-control" name="date" #date="ngModel" [(ngModel)]="content_edit.date">
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="form-group">
 					<label>Sub-Categoría</label>
-					<select class="form-control" name="category" #category="ngModel" [(ngModel)]="content_new.category">
+					<select class="form-control" name="category" #category="ngModel" [(ngModel)]="content_edit.category">
 						<option value="0" selected>Seleccionar sub-categoría</option>
 						<option *ngFor="let s of subcategories" value="{{s.name_subcategory}}">{{s.name_subcategory}}</option>
 					</select>
@@ -55,7 +54,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Categoría</label>
-					<select class="form-control" name="category_father" #category_father="ngModel" [(ngModel)]="content_new.category_father" (change)="getCategoryByFather(content_new.category_father)">
+					<select class="form-control" name="category_father" #category_father="ngModel" [(ngModel)]="content_edit.category_father" (change)="getCategoryByFather(content_edit.category_father)">
 						<option value="0" selected>Seleccionar categoría</option>
 						<option *ngFor="let c of categories" value="{{c.name_category}}">{{c.name_category}}</option>
 					</select>
@@ -68,14 +67,14 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Moneda</label>
-						<select class="form-control" name="coin" #coin="ngModel" [(ngModel)]="content_new.coin">
+						<select class="form-control" name="coin" #coin="ngModel" [(ngModel)]="content_edit.coin">
 							<option value="1" selected>Seleccionar moneda</option>
 							<option *ngFor="let c of coins" value="{{c.name_coin}}">{{c.name_coin}}</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label>Forma de Pago</label>
-						<select class="form-control" name="payment" #payment="ngModel" [(ngModel)]="content_new.payment" (change)="obtenerCard(content_new.payment)">
+						<select class="form-control" name="payment" #payment="ngModel" [(ngModel)]="content_edit.payment" (change)="obtenerCard(content_edit.payment)">
 							<option value="0" selected>Seleccionar Forma de Pago</option>
 							<option *ngFor="let p of payments" value="{{p.name_payment}}">{{p.name_payment}}</option>
 						</select>
@@ -85,14 +84,14 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Tarjeta</label>
-						<select class="form-control" name="card" #card="ngModel" [(ngModel)]="content_new.card">
+						<select class="form-control" name="card" #card="ngModel" [(ngModel)]="content_edit.card">
 							<option value="0" selected>Seleccionar tarjeta</option>
 							<option *ngFor="let c of cards" value="{{c.name_card}}">{{c.name_card}}</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label>Cuotas</label>
-						<input type="number" class="form-control" name="total_dues" #total_dues="ngModel" [(ngModel)]="content_new.total_dues"> 
+						<input type="number" class="form-control" name="total_dues" #total_dues="ngModel" [(ngModel)]="content_edit.total_dues"> 
 					</div>
 				</div>
 			</div>
@@ -104,32 +103,10 @@
 			<button type="button" class="btn btn-default pull-left">Close</button>
 		</div>
 		<div class="col-md-6">
-			<button type="button" (click)="onSubmit()" class="btn btn-default" data-toggle="modal" data-target="#modal-confirmacion-new-content">Save</button>
+			<button type="button" class="btn btn-default" (click)="onSubmit()">Edit</button>
 		</div>
 	</div>
 
-	</form>
-</div>
-
-<!-- Modal #modal-confirmacion-new-content -->
-<div class="modal fade" id="modal-confirmacion-new-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Seleccione una opción</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>El contenido se guardó exitosamente. ¿Desea ingresar un nuevo contenido?</p>
-      </div>
-      <div class="modal-footer">
-        <a href="/"><button type="button" class="btn btn-secondary">CANCELAR</button></a>
-        <a href="new-content"><button type="button" class="btn btn-primary">ACEPTAR</button></a>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- Modal #modal-new-subcategory -->
@@ -147,7 +124,7 @@
 	    	<div class="col-md-6">
 	        	<div class="form-group">
 	            	<label>Nombre</label>
-	                <input type="text" class="form-control" name="name_subcategory" #name_content="ngModel" [(ngModel)]="subcategory_new.name_subcategory" >
+	                <input type="text" class="form-control" name="name_subcategory" #name_subcategory="ngModel" [(ngModel)]="subcategory_new.name_subcategory" >
 	            </div>
 	            <div class="form-group">
 					<label>Categoría</label>

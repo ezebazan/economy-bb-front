@@ -9,12 +9,14 @@ import { routing, appRoutingProviders } from './app.routing';
 
 import { ContentsListComponent } from './components/contents-list.components';
 import { ContentNewComponent } from './components/content-new.components';
+import { ContentEditComponent } from './components/content-edit.components';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContentsListComponent,
-    ContentNewComponent
+    ContentNewComponent,
+    ContentEditComponent
   ],
   imports: [
     BrowserModule,
