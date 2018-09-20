@@ -54,7 +54,7 @@ export class ContentNewComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.content_new = new Content("","",0,"","","","","","","","","","","");
+		this.content_new = new Content("","",0,"","","","","","","","","","","",0);
 		console.log(this.content_new);
 		this.subcategory_new = new Subcategory("","","");
 		console.log(this.subcategory_new);
@@ -65,13 +65,13 @@ export class ContentNewComponent implements OnInit {
 
 	obtenerSubcategorias(subcategory) {
 		/* BOOTSTRAP DROPDOWN MENU - Update selected item text and image */
-		$(".dropdown-menu li a").click(function () {
+		/*$(".dropdown-menu li a").click(function () {
 		    var selText = $(this).text();
 		    var imgSource = $(this).find('img').attr('src');
 		    var img = '<img src="' + imgSource + '"/>';        
 		    $(this).parents('.btn-group').find('.dropdown-toggle').html(img + ' ' + selText + ' <span class="caret"></span>');
 		});
-		this.subcategory = subcategory;
+		this.subcategory = subcategory;*/
 	}
 
 	verificarCargaContent(typeContent) {

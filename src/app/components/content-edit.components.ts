@@ -56,7 +56,7 @@ export class ContentEditComponent implements OnInit {
 
 	ngOnInit() {
 		this.getContent();
-		this.content_edit = new Content("","",0,"","","","","","","","","","","");
+		this.content_edit = new Content("","",0,"","","","","","","","","","","",0);
 		console.log(this.content_edit);
 		this.subcategory_new = new Subcategory("","","");
 		console.log(this.subcategory_new);

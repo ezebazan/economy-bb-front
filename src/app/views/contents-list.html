@@ -23,7 +23,7 @@
       <div class="r3_counter_box">
         <i class="pull-left fa fa-balance-scale icon-rounded"></i>
         <div class="stats">
-          <h5><strong onload="obtenerEquilibrio()" id="Equilibrio"></strong></h5>
+          <h5><strong id="Equilibrio">{{equilibrio}}</strong></h5>
           <span>Equilibrio</span>
         </div>
       </div>
@@ -85,12 +85,12 @@
                 <span><a (click)="payContent(i)"><i class="fas fa-money-bill"></i></a></span>&nbsp;
                 <span><a [routerLink]="['/edit-content', i._id]"><i class="fa fa-pencil-alt"></i></a></span>&nbsp;
                 <span><a (click)="onBorrarConfirm(i._id)"><i class="fas fa-trash-alt"></i></a></span>
-                <div class="seguro" *ngIf="confirmado == i._id">
-                  <strong>¿Esta seguro de eliminar el contenido {{i.name_content}}?</strong>
-                  <a (click)="onBorrarContent(i._id)" class="btn btn-danger">Eliminar</a>
-                  <a (click)="onCancelarConfirm(i._id)" class="btn btn-warning">Cancelar</a>
-                </div>
               </td>
+              <div class="seguro" *ngIf="confirmado == i._id">
+                <strong>¿Esta seguro de eliminar el contenido {{i.name_content}}?</strong>
+                <a (click)="onBorrarContent(i._id)" class="btn btn-danger">Eliminar</a>
+                <a (click)="onCancelarConfirm(i._id)" class="btn btn-warning">Cancelar</a>
+              </div>
             </tr>
           </table>
         </div>

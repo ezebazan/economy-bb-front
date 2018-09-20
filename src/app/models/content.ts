@@ -13,6 +13,7 @@ export class Content {
 		public category_father: string,
 		public category_super: string,
 		public date: string,
-		public periodo: string
+		public periodo: string,
+		public totalAmount: number
 	){}
 }

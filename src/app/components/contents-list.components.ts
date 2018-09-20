@@ -36,13 +36,15 @@ export class ContentsListComponent implements OnInit {
 	public chk_gasto: boolean;
 	public chk_ingreso: boolean;
 	public title: string;
-	public equilibrio: number;
+	public equilibrio;
 	public periodo: string;
-	public year: string;
+	public year: number;
 	public fecha: Date;
 	public meses: string[];
 	public confirmado;
 	public periodo_move;
+	public gastos;
+	public ingresos;
 
 	constructor(
 			private _route: ActivatedRoute,
@@ -76,6 +78,8 @@ export class ContentsListComponent implements OnInit {
 		this.periodo_move = this.periodo_move + 1;
 		this.periodo = this.meses[this.periodo_move];
 		this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
+		this.getCategoryReports();
+		this.getSubCategoryReports();
 	}
 
 	backPeriodo() {
@@ -87,6 +91,8 @@ export class ContentsListComponent implements OnInit {
 		this.periodo_move = this.periodo_move - 1;
 		this.periodo = this.meses[this.periodo_move];
 		this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
+		this.getCategoryReports();
+		this.getSubCategoryReports();
 	}
 
 	obtenerPeriodo() {
@@ -230,6 +236,12 @@ export class ContentsListComponent implements OnInit {
 		this._contentService.getCategoryReports(this.periodo).subscribe(
 				result => {
 					this.categoryReports = result.reports;
+
+					for (var i = 1; i < this.categoryReports.length; i++) {
+						this.gastos = this.categoryReports[i].totalAmount;
+						this.ingresos = this.categoryReports[i-1].totalAmount;
+						this.equilibrio = this.categoryReports[i].totalAmount - this.categoryReports[i-1].totalAmount;
+					}
 
 					if(!this.categoryReports) {
 						alert("Error en el servidor");
