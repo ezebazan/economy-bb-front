@@ -94,6 +94,7 @@ export class ContentEditComponent implements OnInit {
 			this._contentService.getContent(id).subscribe(
 				result => {
 					this.content_edit = result.content;
+					this.getCategoryByFather(this.content_edit.category_father);
 
 					if(!this.content_edit) {
 						alert("Error en el servidor");

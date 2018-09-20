@@ -1,11 +1,6 @@
 <div class="new-content">
 	<div class="row">
 		<div class="col-md-12">
-			<a href="/"><button class="btn btn-default" >Volver</button></a>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
 	    	<div class="col-md-6 btn-select-ingreso" (click)="verificarCargaContent('ingreso')">
 	        	<span>INGRESO</span>
 	        </div>
@@ -14,7 +9,6 @@
 	        </div>
 	    </div>
 	</div>
-	<form #formContents="ngForm" (ngSubmit)="onSubmit()">
 	<div id="gasto">
 		<h4 class="modal-title">Registrar {{title}}</h4>
 		<div class="row">
@@ -30,35 +24,41 @@
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
-					<label>Fecha</label>
-					<input type="date" class="form-control" name="date" #date="ngModel" [(ngModel)]="content_new.date">
-				</div>
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<label>Sub-Categoría</label>
-					<select class="form-control" name="category" #category="ngModel" [(ngModel)]="content_new.category">
-						<option value="0" selected>Seleccionar sub-categoría</option>
-						<option *ngFor="let s of subcategories" value="{{s.name_subcategory}}">{{s.name_subcategory}}</option>
+					<label>Categoría</label>
+					<select class="form-control" name="category_father" #category_father="ngModel" [(ngModel)]="content_new.category_father" (change)="getCategoryByFather(content_new.category_father)">
+						<option value="0" selected>Seleccionar categoría</option>
+						<option *ngFor="let c of categories" value="{{c.name_category}}">{{c.name_category}}</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-md-1">
+			<div class="col-md-6">
 				<div class="form-group">
-					<label></label>
-					<button data-toggle="modal" data-target="#modal-new-subcategory">+</button>
+					<!--<label>Sub-Categoría</label>
+					<select class="form-control" name="category" #category="ngModel" [(ngModel)]="content_new.category">
+						<option value="0" selected>Seleccionar sub-categoría</option>
+						<option *ngFor="let s of subcategories" value="{{s.name_subcategory}}"><img width="24" src="{{s.picture}}"> - {{s.name_subcategory}}</option>
+					</select>-->
+					
 				</div>
+				<div class="btn-group" style="margin:10px;">                     
+		            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"> Sub-Categoría <span class="caret"></span></a>
+		            <ul class="dropdown-menu" name="category" #category="ngModel" [(ngModel)]="content_new.category">
+		            	<li *ngFor="let s of subcategories" value="{{s.name_subcategory}}"><a (click)="obtenerSubcategorias(s.name_subcategory)">
+		                	<img src="{{s.picture}}" />&nbsp;&nbsp; {{s.name_subcategory}}</a>
+		                </li>
+		                <li>
+		                	<a data-toggle="modal" data-target="#modal-new-subcategory"><img src="assets/img/add.png" />&nbsp;&nbsp; New-Subcategory</a>
+		                </li>
+		            </ul>
+		        </div>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label>Categoría</label>
-					<select class="form-control" name="category_father" #category_father="ngModel" [(ngModel)]="content_new.category_father" (change)="getCategoryByFather(content_new.category_father)">
-						<option value="0" selected>Seleccionar categoría</option>
-						<option *ngFor="let c of categories" value="{{c.name_category}}">{{c.name_category}}</option>
-					</select>
+					<label>Fecha</label>
+					<input type="date" class="form-control" name="date" #date="ngModel" [(ngModel)]="content_new.date">
 				</div>
 			</div>
 		</div>
@@ -101,14 +101,12 @@
 
 	<div class="row col-md-12 botonera-form">
 		<div class="col-md-6">
-			<button type="button" class="btn btn-default pull-left">Close</button>
+			<a href="/"><button class="btn btn-default" >Volver</button></a>
 		</div>
 		<div class="col-md-6">
 			<button type="button" (click)="onSubmit()" class="btn btn-default" data-toggle="modal" data-target="#modal-confirmacion-new-content">Save</button>
 		</div>
 	</div>
-
-	</form>
 </div>
 
 <!-- Modal #modal-confirmacion-new-content -->

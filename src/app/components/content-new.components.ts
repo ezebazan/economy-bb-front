@@ -35,6 +35,7 @@ export class ContentNewComponent implements OnInit {
 	public title: string;
 	public fecha: Date;
 	public meses: string[];
+	public subcategory: string;
 
 	constructor(
 			private _route: ActivatedRoute,
@@ -60,6 +61,17 @@ export class ContentNewComponent implements OnInit {
 		this.getCoins();
 		this.getPayments();
 		this.getCategories();
+	}
+
+	obtenerSubcategorias(subcategory) {
+		/* BOOTSTRAP DROPDOWN MENU - Update selected item text and image */
+		$(".dropdown-menu li a").click(function () {
+		    var selText = $(this).text();
+		    var imgSource = $(this).find('img').attr('src');
+		    var img = '<img src="' + imgSource + '"/>';        
+		    $(this).parents('.btn-group').find('.dropdown-toggle').html(img + ' ' + selText + ' <span class="caret"></span>');
+		});
+		this.subcategory = subcategory;
 	}
 
 	verificarCargaContent(typeContent) {
@@ -90,6 +102,8 @@ export class ContentNewComponent implements OnInit {
 		this.meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 		this.fecha = new Date(this.content_new.date);
 		this.content_new.periodo = this.meses[this.fecha.getMonth()];
+
+		this.content_new.category = this.subcategory;
 
 		if(this.content_new.category_father == 'Ingreso') {
 			this.content_new.category_super = 'Ingreso';

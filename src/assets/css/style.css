@@ -4,6 +4,12 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+.barra-periodo {
+    background-color: #222d32;
+    color: #b8c7ce;
+    padding: 1.05%;
+}
+
 .new-content {
   margin: 2%;
 }
@@ -6049,7 +6055,7 @@ i.fa.fa-facebook.profile-icon {
     padding: 1em;
     margin: 0;
 	background: #2c3a40;
-	background: #ff4f81;
+	background: #165621;
     color: #fff;
 	text-transform:uppercase;
 	font-size:1em;
@@ -6062,11 +6068,11 @@ i.fa.fa-facebook.profile-icon {
 }
 .activity_box1 h3 {
     background: #2c3a40;
-    background: #0091cd;
+    background: #165621;
 }
 .activity_box2 h3 {
     background: #2c3a40;
-    background: #00a78e;
+    background: #165621;
 }
 .col_2 {
   background-color: #fff;
@@ -6295,7 +6301,7 @@ i.icon_13{
 #style-1::-webkit-scrollbar-thumb
 {
 	
-	background-color: #ff4f81;
+	background-color: #165621;
 }
 
 #style-2::-webkit-scrollbar-track

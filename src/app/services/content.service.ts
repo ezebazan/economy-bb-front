@@ -23,13 +23,13 @@ export class ContentService {
 							.pipe(map(res => res.json()));
 	}
 
-	getCategoryReports() {
-		return this._http.get(this.url + 'contents/category/reports')
+	getCategoryReports(periodo) {
+		return this._http.get(this.url + 'contents/category/reports/' + periodo)
 							.pipe(map(res => res.json()));
 	}
 
-	getSubCategoryReports() {
-		return this._http.get(this.url + 'contents/subcategory/reports')
+	getSubCategoryReports(periodo) {
+		return this._http.get(this.url + 'contents/subcategory/reports/' + periodo)
 							.pipe(map(res => res.json()));
 	}
 

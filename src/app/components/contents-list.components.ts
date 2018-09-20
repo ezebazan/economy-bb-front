@@ -38,9 +38,11 @@ export class ContentsListComponent implements OnInit {
 	public title: string;
 	public equilibrio: number;
 	public periodo: string;
+	public year: string;
 	public fecha: Date;
 	public meses: string[];
 	public confirmado;
+	public periodo_move;
 
 	constructor(
 			private _route: ActivatedRoute,
@@ -65,10 +67,34 @@ export class ContentsListComponent implements OnInit {
 		this.getCategoryReports();
 	}
 
+	goPeriodo() {
+		this.meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+		this.fecha = new Date();
+		if(this.periodo_move == 11) {
+			this.periodo_move = -1;
+		}
+		this.periodo_move = this.periodo_move + 1;
+		this.periodo = this.meses[this.periodo_move];
+		this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
+	}
+
+	backPeriodo() {
+		this.meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+		this.fecha = new Date();
+		if(this.periodo_move == 0) {
+			this.periodo_move = 12;
+		}
+		this.periodo_move = this.periodo_move - 1;
+		this.periodo = this.meses[this.periodo_move];
+		this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
+	}
+
 	obtenerPeriodo() {
 		this.meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 		this.fecha = new Date();
 		this.periodo = this.meses[this.fecha.getMonth()];
+		this.periodo_move = this.fecha.getMonth();
+		this.year = this.fecha.getFullYear();
 	}
 
 	getContentsCategoryFather(categoryFather_1, categoryFather_2, categoryFather_3, periodo) {
@@ -201,7 +227,7 @@ export class ContentsListComponent implements OnInit {
 	}
 
 	getCategoryReports() {
-		this._contentService.getCategoryReports().subscribe(
+		this._contentService.getCategoryReports(this.periodo).subscribe(
 				result => {
 					this.categoryReports = result.reports;
 
@@ -220,7 +246,7 @@ export class ContentsListComponent implements OnInit {
 	}
 
 	getSubCategoryReports() {
-		this._contentService.getSubCategoryReports().subscribe(
+		this._contentService.getSubCategoryReports(this.periodo).subscribe(
 				result => {
 					this.subcategoryReports = result.reports;
 
@@ -250,6 +276,8 @@ export class ContentsListComponent implements OnInit {
 		this._contentService.deleteContent(id).subscribe(
 				result => {
 					this.getContentsCategoryFather('Economía 50', 'Economía 30', 'Economía 20', this.periodo);
+					this.getSubCategoryReports();
+					this.getCategoryReports();
 				},
 				error => {
 					this.errorMessage = <any>error;
